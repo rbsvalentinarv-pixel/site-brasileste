@@ -2115,13 +2115,13 @@
           body:    JSON.stringify(dados)
         });
         const json = await res.json();
-        if (res.ok && json.success === 'true') {
+        if (res.ok && String(json.success) === 'true') {
           msgOk.style.display = 'flex';
           form.reset();
           msgOk.scrollIntoView({ behavior: 'smooth', block: 'center' });
           setTimeout(() => { msgOk.style.display = 'none'; }, 8000);
         } else {
-          throw new Error('Falha no envio');
+          throw new Error('Falha no envio: ' + (json.message || res.status));
         }
       } catch (err) {
         console.error('Erro FormSubmit:', err);
